@@ -1,14 +1,1 @@
-# ikts22lab12
-module dmx_1_2 (
-        input addr,
-        input x,
-        output reg [1:0] y
-);
-
-always @(*) case(addr)
-        1'd0:        y = {1'bz, x};
-        1'd1:        y = {x, 1'bz};
-        default : y = 2'bzz;
-endcase
-
-endmodule
+https://docs.google.com/document/d/1K0FGcHXNhief7hnNQOUmRQIRxivmMmZ0M-LkM2jZxzQ/edit#heading=h.5cr7147l8b9z
