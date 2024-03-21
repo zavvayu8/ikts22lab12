@@ -1,0 +1,101 @@
+module bus_dmx_1_8 #(
+	parameter N=8
+)(
+		input [2:0] addr,
+		input [N-1:0] x,
+		output reg [N-1:0] y0, y1, y2, y3, y4, y5, y6, y7
+);
+always @(*) case(addr)
+	3'h0:begin
+				y0=x;
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+	3'h1:begin
+				y0={N{1'bz}};
+				y1=x;
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+	3'h2:begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2=x;
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+		3'h3:begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3=x;
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+	3'h4:begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4=x;
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+	3'h5:begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5=x;
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+	3'h6:begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6=x;
+				y7={N{1'bz}};
+			end
+	3'h7:begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7=x;
+			end
+	default : begin
+				y0={N{1'bz}};
+				y1={N{1'bz}};
+				y2={N{1'bz}};
+				y3={N{1'bz}};
+				y4={N{1'bz}};
+				y5={N{1'bz}};
+				y6={N{1'bz}};
+				y7={N{1'bz}};
+			end
+endcase
+endmodule
+				

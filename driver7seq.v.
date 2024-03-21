@@ -1,0 +1,17 @@
+module driver7seq (
+		input [3:0] bin,,
+		output [6:0] hex
+);
+
+reg [6:0] rhex;
+
+always @*
+ case(bin)
+	4'b0000: rhex = 7'b1000000;
+	4'b0001: rhex = 7'b1111001;
+	
+	4'b1111: rhex = 7'b0001110;
+ endcase
+ assign hex = rhex;
+ 
+ endmodule

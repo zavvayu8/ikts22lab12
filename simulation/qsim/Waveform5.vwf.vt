@@ -1,0 +1,598 @@
+// Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, the Altera Quartus II License Agreement,
+// the Altera MegaCore Function License Agreement, or other 
+// applicable license agreement, including, without limitation, 
+// that your use is for the sole purpose of programming logic 
+// devices manufactured by Altera and sold by Altera or its 
+// authorized distributors.  Please refer to the applicable 
+// agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench with test vectors .The test vectors  
+// are exported from a vector file in the Quartus Waveform Editor and apply to  
+// the top level entity of the current Quartus project .The user can use this   
+// testbench to simulate his design using a third-party simulation tool .       
+// *****************************************************************************
+// Generated on "03/07/2024 13:00:47"
+                                                                        
+// Verilog Self-Checking Test Bench (with test vectors) for design :    dmx_1_2
+// 
+// Simulation tool : 3rd Party
+// 
+
+`timescale 1 ps/ 1 ps
+module dmx_1_2_vlg_sample_tst(
+	addr,
+	x,
+	sampler_tx
+);
+input  addr;
+input  x;
+output sampler_tx;
+
+reg sample;
+time current_time;
+always @(addr or x)
+                                                                                
+begin                                                 
+ if ($realtime > 0)                                   
+ begin                                                
+    if ($realtime == 0 || $realtime != current_time)  
+    begin                                             
+        if (sample === 1'bx)                          
+            sample = 0;                               
+        else                                          
+            sample = ~sample;                         
+    end                                               
+    current_time = $realtime;                         
+ end                                                  
+end                                                   
+
+assign sampler_tx = sample;
+endmodule
+
+module dmx_1_2_vlg_check_tst (
+	y,
+	sampler_rx
+);
+input [1:0] y;
+input sampler_rx;
+
+reg [1:0] y_expected;
+
+reg [1:0] y_prev;
+
+reg [1:0] y_expected_prev;
+
+reg [1:0] last_y_exp;
+
+reg trigger;
+
+integer i;
+integer nummismatches;
+
+reg [1:1] on_first_change ;
+
+
+initial
+begin
+trigger = 0;
+i = 0;
+nummismatches = 0;
+on_first_change = 1'b1;
+end
+
+// update real /o prevs
+
+always @(trigger)
+begin
+	y_prev = y;
+end
+
+// update expected /o prevs
+
+always @(trigger)
+begin
+	y_expected_prev = y_expected;
+end
+
+
+// expected y[ 1 ]
+initial
+begin
+	y_expected[1] = 1'bX;
+end 
+// expected y[ 0 ]
+initial
+begin
+	y_expected[0] = 1'bX;
+end 
+// generate trigger
+always @(y_expected or y)
+begin
+	trigger <= ~trigger;
+end
+
+always @(posedge sampler_rx or negedge sampler_rx)
+begin
+`ifdef debug_tbench
+	$display("Scanning pattern %d @time = %t",i,$realtime );
+	i = i + 1;
+	$display("| expected y = %b | ",y_expected_prev);
+	$display("| real y = %b | ",y_prev);
+`endif
+	if (
+		( y_expected_prev[0] !== 1'bx ) && ( y_prev[0] !== y_expected_prev[0] )
+		&& ((y_expected_prev[0] !== last_y_exp[0]) ||
+			on_first_change[1])
+	)
+	begin
+		$display ("ERROR! Vector Mismatch for output port y[0] :: @time = %t",  $realtime);
+		$display ("     Expected value = %b", y_expected_prev);
+		$display ("     Real value = %b", y_prev);
+		nummismatches = nummismatches + 1;
+		on_first_change[1] = 1'b0;
+		last_y_exp[0] = y_expected_prev[0];
+	end
+	if (
+		( y_expected_prev[1] !== 1'bx ) && ( y_prev[1] !== y_expected_prev[1] )
+		&& ((y_expected_prev[1] !== last_y_exp[1]) ||
+			on_first_change[1])
+	)
+	begin
+		$display ("ERROR! Vector Mismatch for output port y[1] :: @time = %t",  $realtime);
+		$display ("     Expected value = %b", y_expected_prev);
+		$display ("     Real value = %b", y_prev);
+		nummismatches = nummismatches + 1;
+		on_first_change[1] = 1'b0;
+		last_y_exp[1] = y_expected_prev[1];
+	end
+
+	trigger <= ~trigger;
+end
+initial 
+
+begin 
+$timeformat(-12,3," ps",6);
+#1000000;
+if (nummismatches > 0)
+	$display ("%d mismatched vectors : Simulation failed !",nummismatches);
+else
+	$display ("Simulation passed !");
+$finish;
+end 
+endmodule
+
+module dmx_1_2_vlg_vec_tst();
+// constants                                           
+// general purpose registers
+reg addr;
+reg x;
+// wires                                               
+wire [1:0] y;
+
+wire sampler;                             
+
+// assign statements (if any)                          
+dmx_1_2 i1 (
+// port map - connection between master ports and signals/registers   
+	.addr(addr),
+	.x(x),
+	.y(y)
+);
+
+// addr
+initial
+begin
+	addr = 1'b1;
+	addr = #20000 1'b0;
+	addr = #20000 1'b1;
+	addr = #40000 1'b0;
+	addr = #20000 1'b1;
+	addr = #20000 1'b0;
+	addr = #20000 1'b1;
+	addr = #40000 1'b0;
+	addr = #20000 1'b1;
+	addr = #20000 1'b0;
+	addr = #20000 1'b1;
+	addr = #20000 1'b0;
+	addr = #20000 1'b1;
+	addr = #40000 1'b0;
+	addr = #20000 1'b1;
+	addr = #40000 1'b0;
+	addr = #40000 1'b1;
+	addr = #60000 1'b0;
+	addr = #40000 1'b1;
+	addr = #20000 1'b0;
+	addr = #20000 1'b1;
+	addr = #60000 1'b0;
+	addr = #60000 1'b1;
+	addr = #20000 1'b0;
+	addr = #40000 1'b1;
+	addr = #20000 1'b0;
+	addr = #40000 1'b1;
+	addr = #40000 1'b0;
+	addr = #60000 1'b1;
+	addr = #60000 1'b0;
+	addr = #20000 1'b1;
+end 
+
+// x
+initial
+begin
+	x = 1'b1;
+	# 2960;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2934 1'b1;
+		# 3732;
+	end
+	x = 1'b0;
+	x = #2934 1'b1;
+	x = #774 1'b0;
+	x = #7754 1'b1;
+	x = #6200 1'b0;
+	x = #6935 1'b1;
+	x = #9800 1'b0;
+	x = #9311 1'b1;
+	x = #2249 1'b0;
+	x = #4300 1'b1;
+	x = #5700 1'b0;
+	x = #4300 1'b1;
+	x = #3451 1'b0;
+	x = #69 1'b1;
+	# 1233;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2100 1'b1;
+		# 1233;
+	end
+	x = 1'b0;
+	x = #3387 1'b1;
+	# 1066;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2267 1'b1;
+		# 1066;
+	end
+	x = 1'b0;
+	x = #1323 1'b1;
+	# 2199;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #4467 1'b1;
+		# 2199;
+	end
+	x = 1'b0;
+	x = #4059 1'b1;
+	x = #2736 1'b0;
+	x = #5400 1'b1;
+	x = #4600 1'b0;
+	x = #5400 1'b1;
+	x = #3228 1'b0;
+	x = #1867 1'b1;
+	x = #1466 1'b0;
+	x = #1867 1'b1;
+	x = #1466 1'b0;
+	x = #1867 1'b1;
+	x = #2433 1'b0;
+	x = #2550 1'b1;
+	x = #2450 1'b0;
+	x = #2550 1'b1;
+	x = #3866 1'b0;
+	x = #5100 1'b1;
+	x = #2532 1'b0;
+	x = #3867 1'b1;
+	x = #2799 1'b0;
+	x = #3867 1'b1;
+	x = #2799 1'b0;
+	x = #3867 1'b1;
+	x = #1423 1'b0;
+	x = #4048 1'b1;
+	x = #3400 1'b0;
+	x = #2552 1'b1;
+	# 657;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #1434 1'b1;
+		# 1899;
+	end
+	x = 1'b0;
+	x = #1434 1'b1;
+	x = #1243 1'b0;
+	x = #3469 1'b1;
+	x = #5300 1'b0;
+	x = #4700 1'b1;
+	x = #5300 1'b0;
+	x = #2730 1'b1;
+	x = #1800 1'b0;
+	x = #3200 1'b1;
+	x = #1800 1'b0;
+	x = #1701 1'b1;
+	x = #68 1'b0;
+	x = #12200 1'b1;
+	x = #9161 1'b0;
+	x = #1434 1'b1;
+	x = #1899 1'b0;
+	x = #1434 1'b1;
+	x = #1899 1'b0;
+	x = #1434 1'b1;
+	x = #471 1'b0;
+	x = #157 1'b1;
+	# 1566;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #1767 1'b1;
+		# 1566;
+	end
+	x = 1'b0;
+	x = #8043 1'b1;
+	x = #8000 1'b0;
+	x = #9701 1'b1;
+	x = #12000 1'b0;
+	x = #3867 1'b1;
+	x = #1011 1'b0;
+	x = #4000 1'b1;
+	x = #4989 1'b0;
+	x = #1304 1'b1;
+	x = #6000 1'b0;
+	x = #12696 1'b1;
+	# 631;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2667 1'b1;
+		# 3999;
+	end
+	x = 1'b0;
+	x = #2667 1'b1;
+	x = #7549 1'b0;
+	x = #8000 1'b1;
+	x = #10513 1'b0;
+	x = #2934 1'b1;
+	x = #3732 1'b0;
+	x = #2934 1'b1;
+	x = #3732 1'b0;
+	x = #2934 1'b1;
+	x = #2188 1'b0;
+	x = #2600 1'b1;
+	x = #2400 1'b0;
+	x = #2600 1'b1;
+	x = #1254 1'b0;
+	x = #1744 1'b1;
+	x = #2200 1'b0;
+	x = #2800 1'b1;
+	x = #2200 1'b0;
+	x = #2487 1'b1;
+	x = #7600 1'b0;
+	x = #13657 1'b1;
+	x = #9800 1'b0;
+	x = #7512 1'b1;
+	x = #2160 1'b0;
+	x = #2550 1'b1;
+	x = #2450 1'b0;
+	x = #2550 1'b1;
+	x = #1497 1'b0;
+	x = #1867 1'b1;
+	x = #1466 1'b0;
+	x = #1867 1'b1;
+	x = #1466 1'b0;
+	x = #1867 1'b1;
+	x = #7232 1'b0;
+	x = #12200 1'b1;
+	x = #828 1'b0;
+	x = #5454 1'b1;
+	x = #3900 1'b0;
+	x = #646 1'b1;
+	x = #49 1'b0;
+	x = #12400 1'b1;
+	x = #7551 1'b0;
+	x = #362 1'b1;
+	x = #3300 1'b0;
+	x = #6338 1'b1;
+	x = #457 1'b0;
+	x = #6300 1'b1;
+	x = #4152 1'b0;
+	x = #5900 1'b1;
+	x = #4100 1'b0;
+	x = #5900 1'b1;
+	x = #4748 1'b0;
+	x = #1667 1'b1;
+	x = #1666 1'b0;
+	x = #1667 1'b1;
+	x = #1666 1'b0;
+	x = #1667 1'b1;
+	x = #110 1'b0;
+	x = #2077 1'b1;
+	x = #9000 1'b0;
+	x = #8923 1'b1;
+	# 463;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #1434 1'b1;
+		# 1899;
+	end
+	x = 1'b0;
+	x = #1434 1'b1;
+	x = #1437 1'b0;
+	x = #2031 1'b1;
+	# 1099;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2234 1'b1;
+		# 1099;
+	end
+	x = 1'b0;
+	x = #204 1'b1;
+	x = #1301 1'b0;
+	x = #13400 1'b1;
+	x = #5299 1'b0;
+	x = #1286 1'b1;
+	x = #2300 1'b0;
+	x = #2700 1'b1;
+	x = #2300 1'b0;
+	x = #2840 1'b1;
+	x = #4800 1'b0;
+	x = #6096 1'b1;
+	# 3199;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #3467 1'b1;
+		# 3199;
+	end
+	x = 1'b0;
+	x = #2189 1'b1;
+	x = #9200 1'b0;
+	x = #12834 1'b1;
+	x = #1650 1'b0;
+	x = #3350 1'b1;
+	x = #1650 1'b0;
+	x = #274 1'b1;
+	# 1498;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #1500 1'b1;
+		# 1833;
+	end
+	x = 1'b0;
+	x = #1500 1'b1;
+	x = #2261 1'b0;
+	x = #5000 1'b1;
+	x = #3075 1'b0;
+	x = #2076 1'b1;
+	# 1099;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2234 1'b1;
+		# 1099;
+	end
+	x = 1'b0;
+	x = #159 1'b1;
+	x = #1603 1'b0;
+	x = #6000 1'b1;
+	x = #4000 1'b0;
+	x = #6000 1'b1;
+	x = #3286 1'b0;
+	x = #6100 1'b1;
+	x = #3900 1'b0;
+	x = #6100 1'b1;
+	x = #4824 1'b0;
+	x = #3100 1'b1;
+	x = #1900 1'b0;
+	x = #3100 1'b1;
+	x = #99 1'b0;
+	x = #4200 1'b1;
+	x = #9238 1'b0;
+	x = #9800 1'b1;
+	x = #6750 1'b0;
+	x = #638 1'b1;
+	# 1133;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #2200 1'b1;
+		# 1133;
+	end
+	x = 1'b0;
+	x = #1563 1'b1;
+	x = #1028 1'b0;
+	x = #2050 1'b1;
+	x = #2950 1'b0;
+	x = #2050 1'b1;
+	x = #2934 1'b0;
+	x = #1600 1'b1;
+	x = #1733 1'b0;
+	x = #1600 1'b1;
+	x = #1733 1'b0;
+	x = #1600 1'b1;
+	x = #722 1'b0;
+	x = #4091 1'b1;
+	x = #4400 1'b0;
+	x = #5600 1'b1;
+	x = #4400 1'b0;
+	x = #2209 1'b1;
+	# 1499;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #1834 1'b1;
+		# 1499;
+	end
+	x = 1'b0;
+	x = #3280 1'b1;
+	x = #3800 1'b0;
+	x = #6200 1'b1;
+	x = #3800 1'b0;
+	x = #6596 1'b1;
+	x = #1650 1'b0;
+	x = #3350 1'b1;
+	x = #1650 1'b0;
+	x = #1379 1'b1;
+	# 1399;
+	repeat(2)
+	begin
+		x = 1'b0;
+		x = #1934 1'b1;
+		# 1399;
+	end
+	x = 1'b0;
+	x = #2144 1'b1;
+	x = #2050 1'b0;
+	x = #2950 1'b1;
+	x = #2050 1'b0;
+	x = #2171 1'b1;
+	x = #1383 1'b0;
+	x = #2200 1'b1;
+	x = #2800 1'b0;
+	x = #2200 1'b1;
+	x = #1968 1'b0;
+	x = #2850 1'b1;
+	x = #2150 1'b0;
+	x = #2850 1'b1;
+	x = #3439 1'b0;
+	x = #6500 1'b1;
+	x = #3500 1'b0;
+	x = #6500 1'b1;
+	x = #2144 1'b0;
+	x = #2334 1'b1;
+	x = #999 1'b0;
+	x = #2334 1'b1;
+	x = #999 1'b0;
+	x = #2334 1'b1;
+	x = #836 1'b0;
+	x = #2100 1'b1;
+	x = #1233 1'b0;
+	x = #2100 1'b1;
+	x = #1233 1'b0;
+	x = #2100 1'b1;
+end 
+
+dmx_1_2_vlg_sample_tst tb_sample (
+	.addr(addr),
+	.x(x),
+	.sampler_tx(sampler)
+);
+
+dmx_1_2_vlg_check_tst tb_out(
+	.y(y),
+	.sampler_rx(sampler)
+);
+endmodule
+
